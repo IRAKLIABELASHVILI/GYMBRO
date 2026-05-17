@@ -1,24 +1,41 @@
-﻿using System.Text;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Training_APP
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
+            // პროგრამა იხსნება Dashboard-ზე
+            NavDashboard_Click(null, null);
+        }
+
+        private void NavDashboard_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new Views.DashboardView();
+        }
+
+        private void NavFood_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new Views.FoodLogView();
+        }
+
+        private void NavWorkout_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new Views.WorkoutView();
+        }
+
+        private void NavCoach_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new Views.CoachView();
+        }
+
+        private void NavProfile_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new Views.ProfileView();
         }
     }
 }

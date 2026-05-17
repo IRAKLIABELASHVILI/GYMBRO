@@ -12,6 +12,7 @@ namespace Training_APP.Model
         public int DurationMinutes { get; set; }
         public int CaloriesBurned { get; set; }
         public string Intensity { get; set; }
+        public string Notes { get; set; }
         public DateTime Date { get; set; } = DateTime.Today;
 
 
