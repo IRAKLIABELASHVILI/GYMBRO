@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 
 namespace Training_APP
 {

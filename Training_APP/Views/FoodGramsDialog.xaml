@@ -1,0 +1,81 @@
+﻿<Window x:Class="Training_APP.Views.FoodGramsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="საჭმლის დეტალები" Height="260" Width="400"
+        WindowStartupLocation="CenterOwner"
+        Background="#0a2416"
+        ResizeMode="NoResize">
+
+    <StackPanel Margin="30">
+
+        <!-- საჭმლის სახელი -->
+        <TextBlock x:Name="FoodNameText"
+                   Foreground="White"
+                   FontFamily="Segoe UI Semibold"
+                   FontSize="18"
+                   Margin="0,0,0,6"/>
+
+        <TextBlock Text="Claude-მა ამოიცნო. შეგიძლია სახელი გაასწორო:"
+                   Foreground="#4a9465"
+                   FontFamily="Segoe UI"
+                   FontSize="12"
+                   Margin="0,0,0,16"/>
+
+        <!-- სახელის რედაქტირება -->
+        <Border CornerRadius="8" BorderBrush="#2d6e47" BorderThickness="1" Margin="0,0,0,12">
+            <TextBox x:Name="NameBox"
+                     Background="#0f3d26" Foreground="White"
+                     FontFamily="Segoe UI" FontSize="14"
+                     Padding="12,10" BorderThickness="0">
+                <TextBox.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+        </Border>
+
+        <!-- გრამები -->
+        <TextBlock Text="რამდენი გრამია?"
+                   Foreground="#4a9465"
+                   FontFamily="Segoe UI Semibold"
+                   FontSize="12"
+                   Margin="0,0,0,6"/>
+
+        <Border CornerRadius="8" BorderBrush="#2d6e47" BorderThickness="1" Margin="0,0,0,20">
+            <TextBox x:Name="GramsBox"
+                     Background="#0f3d26" Foreground="White"
+                     FontFamily="Segoe UI" FontSize="14"
+                     Padding="12,10" BorderThickness="0">
+                <TextBox.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+        </Border>
+
+        <!-- ღილაკი -->
+        <Button Content="გაგრძელება ➤"
+                Click="Confirm_Click"
+                Height="44" Cursor="Hand"
+                FontFamily="Segoe UI Semibold"
+                FontSize="14" Foreground="White"
+                BorderThickness="0">
+            <Button.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#1a5c3a" Offset="0"/>
+                    <GradientStop Color="#2d8a57" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+    </StackPanel>
+</Window>
