@@ -360,6 +360,53 @@
     </Style>
 
     <!-- ================================================================ -->
+    <!--  CHECKBOX                                                          -->
+    <!-- ================================================================ -->
+    <Style TargetType="CheckBox">
+        <Setter Property="Foreground"  Value="{DynamicResource TextPrimaryBrush}"/>
+        <Setter Property="FontFamily"  Value="Segoe UI"/>
+        <Setter Property="FontSize"    Value="13"/>
+        <Setter Property="Cursor"      Value="Hand"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <StackPanel Orientation="Horizontal">
+                        <!-- Custom box -->
+                        <Border x:Name="box"
+                                Width="18" Height="18"
+                                CornerRadius="4"
+                                BorderThickness="1.5"
+                                BorderBrush="{DynamicResource BorderBrush}"
+                                Background="Transparent"
+                                VerticalAlignment="Center">
+                            <TextBlock x:Name="tick"
+                                       Text="✓"
+                                       FontSize="11"
+                                       FontFamily="Segoe UI Semibold"
+                                       Foreground="#0B0D14"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Visibility="Collapsed"/>
+                        </Border>
+                        <ContentPresenter Margin="8,0,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="box"  Property="Background"   Value="{DynamicResource AccentGreenBrush}"/>
+                            <Setter TargetName="box"  Property="BorderBrush"  Value="{DynamicResource AccentGreenBrush}"/>
+                            <Setter TargetName="tick" Property="Visibility"   Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="box" Property="BorderBrush" Value="{DynamicResource AccentGreenBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ================================================================ -->
     <!--  WORKOUT PAGE TAB                                                  -->
     <!-- ================================================================ -->
     <Style x:Key="WorkoutTab" TargetType="RadioButton">

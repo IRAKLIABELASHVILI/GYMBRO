@@ -56,42 +56,87 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!-- Options row -->
+                <!-- Options card -->
                 <Border Grid.Row="0" Style="{StaticResource CardStyle}" Padding="20">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="12"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="12"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="12"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                    <StackPanel>
 
-                        <ComboBox x:Name="LocationCombo" Grid.Column="0" Height="44">
-                            <ComboBoxItem Content="🏠  Home" IsSelected="True"/>
-                            <ComboBoxItem Content="🏋  Gym"/>
-                            <ComboBoxItem Content="🌳  Outdoors"/>
-                        </ComboBox>
-                        <ComboBox x:Name="DaysCombo" Grid.Column="2" Height="44">
-                            <ComboBoxItem Content="3 days / week" IsSelected="True"/>
-                            <ComboBoxItem Content="4 days / week"/>
-                            <ComboBoxItem Content="5 days / week"/>
-                            <ComboBoxItem Content="6 days / week"/>
-                        </ComboBox>
-                        <ComboBox x:Name="GoalCombo" Grid.Column="4" Height="44">
-                            <ComboBoxItem Content="💪  Muscle Gain" IsSelected="True"/>
-                            <ComboBoxItem Content="🔥  Fat Loss"/>
-                            <ComboBoxItem Content="🏃  Endurance"/>
-                            <ComboBoxItem Content="⚖   Maintenance"/>
-                        </ComboBox>
-                        <Button Grid.Column="6"
-                                Content="✨  Generate Plan"
-                                Style="{StaticResource PrimaryButton}"
-                                Height="44" Padding="18,0"
-                                Click="GeneratePlan_Click"/>
-                    </Grid>
+                        <!-- Row 1: Location · Days · Equipment -->
+                        <Grid Margin="0,0,0,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="12"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="12"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <ComboBox x:Name="LocationCombo" Grid.Column="0" Height="44">
+                                <ComboBoxItem Content="🏠  Home" IsSelected="True"/>
+                                <ComboBoxItem Content="🏋  Gym"/>
+                                <ComboBoxItem Content="🌳  Outdoors"/>
+                            </ComboBox>
+
+                            <ComboBox x:Name="DaysCombo" Grid.Column="2" Height="44">
+                                <ComboBoxItem Content="3 days / week" IsSelected="True"/>
+                                <ComboBoxItem Content="4 days / week"/>
+                                <ComboBoxItem Content="5 days / week"/>
+                                <ComboBoxItem Content="6 days / week"/>
+                            </ComboBox>
+
+                            <!-- Equipment input with placeholder -->
+                            <Grid Grid.Column="4">
+                                <TextBox x:Name="EquipmentBox" Height="44" Padding="12,10"/>
+                                <TextBlock Text="Equipment (e.g. dumbbells, barbell, resistance bands)"
+                                           Foreground="{DynamicResource TextSecondaryBrush}"
+                                           Opacity="0.5"
+                                           FontFamily="Segoe UI" FontSize="12"
+                                           Margin="13,0,0,0"
+                                           VerticalAlignment="Center"
+                                           IsHitTestVisible="False">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=EquipmentBox}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                        </Grid>
+
+                        <!-- Row 2: Goals (multi-select) + Generate button -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="12"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                <TextBlock Text="GOALS  (pick one or more)"
+                                           Foreground="{DynamicResource TextSecondaryBrush}"
+                                           FontFamily="Segoe UI Semibold" FontSize="10"
+                                           Margin="0,0,0,10"/>
+                                <WrapPanel>
+                                    <CheckBox x:Name="GoalMuscle"    Content="💪  Muscle Gain"  Margin="0,0,20,0" IsChecked="True"/>
+                                    <CheckBox x:Name="GoalFatLoss"   Content="🔥  Fat Loss"     Margin="0,0,20,0"/>
+                                    <CheckBox x:Name="GoalEndurance" Content="🏃  Endurance"    Margin="0,0,20,0"/>
+                                    <CheckBox x:Name="GoalMaintain"  Content="⚖️  Maintenance"/>
+                                </WrapPanel>
+                            </StackPanel>
+
+                            <Button Grid.Column="2"
+                                    Content="✨  Generate Plan"
+                                    Style="{StaticResource PrimaryButton}"
+                                    Height="44" Padding="18,0"
+                                    VerticalAlignment="Bottom"
+                                    Click="GeneratePlan_Click"/>
+                        </Grid>
+
+                    </StackPanel>
                 </Border>
 
                 <!-- Plan text card -->

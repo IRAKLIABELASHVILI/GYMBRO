@@ -143,25 +143,31 @@ Workouts: {string.Join(", ", dailyLog.WorkoutEntries.Select(w => w.WorkoutName))
         // ================================
         // 💪 ვარჯიშის გეგმის გენერაცია
         // ================================
-        public async Task<string> GenerateWorkoutPlanAsync(string location, string goal, int daysPerWeek, User profile)
+        public async Task<string> GenerateWorkoutPlanAsync(
+            string location, string goal, string equipment, int daysPerWeek, User profile)
         {
-            string prompt = $@"შენ ხარ პერსონალური ტრენერი.
-მომხმარებლის მონაცემები:
-- სად ვარჯიშობს: {location}
-- მიზანი: {goal}
-- კვირაში რამდენი დღე: {daysPerWeek}
-- წონა: {profile.WeightKg}კგ
-- სიმაღლე: {profile.HeightCm}სმ
-- სქესი: {profile.Gender}
-- ასაკი: {profile.Age}
-- გამოცდილება: {profile.ActivityLevel}
-- მიზანი: {profile.Goal}
+            string equipmentLine = string.IsNullOrWhiteSpace(equipment)
+                ? "bodyweight only (no equipment)"
+                : equipment;
 
-შექმენი {daysPerWeek}-დღიანი კვირის ვარჯიშის გეგმა.
-თითოეული დღისთვის დაწერე:
-- დღის სახელი
-- ვარჯიშების სია (სახელი, სეტი, გამეორება)
-- სავარაუდო ხანგრძლივობა";
+            string prompt = $@"You are a professional personal trainer. Create a detailed {daysPerWeek}-day workout plan.
+
+User profile:
+- Location: {location}
+- Goals: {goal}
+- Available equipment: {equipmentLine}
+- Weight: {profile.WeightKg} kg  |  Height: {profile.HeightCm} cm
+- Gender: {profile.Gender}  |  Age: {profile.Age}
+- Experience level: {profile.ActivityLevel}
+
+For each day include:
+- Day name and focus (e.g. Day 1 — Upper Body)
+- Exercise list with sets × reps (or duration for cardio)
+- Estimated session duration
+- Brief tip or note for that day
+
+Make exercises match the available equipment exactly. Do not suggest equipment the user doesn't have.
+If multiple goals are selected, balance the plan to address all of them.";
 
             return await SendRequestAsync(prompt);
         }

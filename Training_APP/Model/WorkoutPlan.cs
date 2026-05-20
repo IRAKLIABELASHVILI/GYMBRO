@@ -8,6 +8,7 @@ namespace Training_APP.Model
         public string PlanText { get; set; } = "";
         public string Location { get; set; } = "";
         public string Goal { get; set; } = "";
+        public string Equipment { get; set; } = "";
         public int DaysPerWeek { get; set; }
         public DateTime GeneratedAt { get; set; } = DateTime.Now;
     }

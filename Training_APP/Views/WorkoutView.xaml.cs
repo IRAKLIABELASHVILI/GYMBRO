@@ -43,12 +43,20 @@ namespace Training_APP.Views
             var saved = await App.WorkoutService.GetSavedPlanAsync();
             if (saved == null) return;
 
-            _currentPlan = saved.PlanText;
+            _currentPlan  = saved.PlanText;
             PlanText.Text = saved.PlanText;
 
             SetComboByContent(LocationCombo, saved.Location);
             SetComboByContent(DaysCombo, saved.DaysPerWeek + " days");
-            SetComboByContent(GoalCombo, saved.Goal);
+
+            // Restore goal checkboxes
+            GoalMuscle.IsChecked    = saved.Goal.Contains("Muscle Gain");
+            GoalFatLoss.IsChecked   = saved.Goal.Contains("Fat Loss");
+            GoalEndurance.IsChecked = saved.Goal.Contains("Endurance");
+            GoalMaintain.IsChecked  = saved.Goal.Contains("Maintenance");
+
+            // Restore equipment
+            EquipmentBox.Text = saved.Equipment ?? "";
 
             PlanDateBadge.Text       = $"Generated {saved.GeneratedAt:MMM d, yyyy}";
             PlanDateBadge.Visibility = Visibility.Visible;
@@ -87,10 +95,26 @@ namespace Training_APP.Views
                 return;
             }
 
-            string location = ((ComboBoxItem)LocationCombo.SelectedItem)?.Content.ToString() ?? "";
-            string goal     = ((ComboBoxItem)GoalCombo.SelectedItem)?.Content.ToString() ?? "";
-            int    days     = int.Parse(((ComboBoxItem)DaysCombo.SelectedItem).Content
-                                        .ToString()!.Split(' ')[0]);
+            string location  = ((ComboBoxItem)LocationCombo.SelectedItem)?.Content.ToString() ?? "";
+            string equipment = EquipmentBox.Text.Trim();
+            int    days      = int.Parse(((ComboBoxItem)DaysCombo.SelectedItem).Content
+                                         .ToString()!.Split(' ')[0]);
+
+            // Collect selected goals
+            var selectedGoals = new System.Collections.Generic.List<string>();
+            if (GoalMuscle.IsChecked    == true) selectedGoals.Add("Muscle Gain");
+            if (GoalFatLoss.IsChecked   == true) selectedGoals.Add("Fat Loss");
+            if (GoalEndurance.IsChecked == true) selectedGoals.Add("Endurance");
+            if (GoalMaintain.IsChecked  == true) selectedGoals.Add("Maintenance");
+
+            if (selectedGoals.Count == 0)
+            {
+                MessageBox.Show("Please select at least one goal.", "Gymbro",
+                                MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            string goal = string.Join(" + ", selectedGoals);
 
             PlanText.Text            = "⏳ Generating your plan...";
             PlanDateBadge.Visibility = Visibility.Collapsed;
@@ -98,7 +122,7 @@ namespace Training_APP.Views
             try
             {
                 string plan = await App.CloudService.GenerateWorkoutPlanAsync(
-                    location, goal, days, user);
+                    location, goal, equipment, days, user);
 
                 _currentPlan  = plan;
                 PlanText.Text = plan;
@@ -108,6 +132,7 @@ namespace Training_APP.Views
                     PlanText    = plan,
                     Location    = location,
                     Goal        = goal,
+                    Equipment   = equipment,
                     DaysPerWeek = days,
                     GeneratedAt = DateTime.Now
                 });

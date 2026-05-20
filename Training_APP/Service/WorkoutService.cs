@@ -62,6 +62,7 @@ namespace Training_APP.Service
                 existing.PlanText    = plan.PlanText;
                 existing.Location    = plan.Location;
                 existing.Goal        = plan.Goal;
+                existing.Equipment   = plan.Equipment;
                 existing.DaysPerWeek = plan.DaysPerWeek;
                 existing.GeneratedAt = plan.GeneratedAt;
             }
