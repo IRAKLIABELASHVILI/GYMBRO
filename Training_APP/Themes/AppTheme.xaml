@@ -350,7 +350,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="#2A1A1A"/>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource InputBrush}"/>
                             <Setter Property="Foreground" Value="#FF6B6B"/>
                         </Trigger>
                     </ControlTemplate.Triggers>

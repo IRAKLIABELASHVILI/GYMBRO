@@ -157,7 +157,7 @@
                                      Foreground="{DynamicResource TextPrimaryBrush}"
                                      Background="{DynamicResource InputBrush}"/>
                             <TextBlock Text="Workout name (e.g. Running, Bench Press)"
-                                       Foreground="#3A4055"
+                                       Foreground="{DynamicResource TextSecondaryBrush}"
                                        FontFamily="Segoe UI" FontSize="12"
                                        Margin="13,0,0,0"
                                        VerticalAlignment="Center"
@@ -181,7 +181,7 @@
                                      Foreground="{DynamicResource TextPrimaryBrush}"
                                      Background="{DynamicResource InputBrush}"/>
                             <TextBlock Text="Minutes"
-                                       Foreground="#3A4055"
+                                       Foreground="{DynamicResource TextSecondaryBrush}"
                                        FontFamily="Segoe UI" FontSize="12"
                                        Margin="13,0,0,0"
                                        VerticalAlignment="Center"

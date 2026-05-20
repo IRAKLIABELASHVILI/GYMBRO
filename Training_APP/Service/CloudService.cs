@@ -34,17 +34,37 @@ namespace Training_APP.Service
         // ================================
         public async Task<(string foodName, int estimatedGrams)> AnalyzeFoodImageAsync(string imagePath)
         {
-            byte[] imageBytes = await File.ReadAllBytesAsync(imagePath);
+            // Detect media type — Claude API supports jpeg, png, gif, webp
+            // BMP is not supported so we convert it to PNG in memory
+            string ext = Path.GetExtension(imagePath).ToLowerInvariant();
+            string mediaType;
+            byte[] imageBytes;
+
+            if (ext == ".bmp")
+            {
+                // Convert BMP → PNG using System.Drawing
+                using var bmp = new System.Drawing.Bitmap(imagePath);
+                using var ms  = new System.IO.MemoryStream();
+                bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                imageBytes = ms.ToArray();
+                mediaType  = "image/png";
+            }
+            else
+            {
+                imageBytes = await File.ReadAllBytesAsync(imagePath);
+                mediaType  = ext == ".png" ? "image/png" : "image/jpeg";
+            }
+
             string base64Image = Convert.ToBase64String(imageBytes);
 
-            string prompt = @"What food is in this image? 
+            string prompt = @"What food is in this image?
 Return ONLY raw JSON, no markdown:
 {
   ""foodName"": ""exact food name"",
   ""estimatedGrams"": 0
 }";
 
-            string raw = await SendImageRequestAsync(base64Image, prompt);
+            string raw = await SendImageRequestAsync(base64Image, prompt, mediaType);
             var json = JObject.Parse(raw);
 
             string foodName = json["foodName"]?.ToString() ?? "Unknown Food";
@@ -219,7 +239,8 @@ Return ONLY raw JSON, no markdown, no backticks:
             return await ExecutePostAsync(requestBody);
         }
 
-        private async Task<string> SendImageRequestAsync(string base64Image, string prompt)
+        private async Task<string> SendImageRequestAsync(string base64Image, string prompt,
+                                                          string mediaType = "image/jpeg")
         {
             var requestBody = new
             {
@@ -238,7 +259,7 @@ Return ONLY raw JSON, no markdown, no backticks:
                                 source = new
                                 {
                                     type = "base64",
-                                    media_type = "image/jpeg",
+                                    media_type = mediaType,
                                     data = base64Image
                                 }
                             },
