@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Training_APP.Data;
 using Training_APP.Model;
 
@@ -6,38 +6,31 @@ namespace Training_APP.Service
 {
     public class UserService
     {
-        private readonly AppDbContext _db;
-
-        public UserService(AppDbContext db)
-        {
-            _db = db;
-        }
-
-        // პირველი მომხმარებლის ჩატვირთვა
         public async Task<User?> GetUserAsync()
         {
-            return await _db.Users.FirstOrDefaultAsync();
+            using var db = new AppDbContext();
+            return await db.Users.AsNoTracking().FirstOrDefaultAsync();
         }
 
-        // მომხმარებლის შენახვა / განახლება
         public async Task SaveUserAsync(User user)
         {
-            var existing = await _db.Users.FirstOrDefaultAsync();
+            user.RecalculateGoals();
+
+            using var db = new AppDbContext();
+            var existing = await db.Users.FirstOrDefaultAsync();
+
             if (existing == null)
             {
-                _db.Users.Add(user);
+                db.Users.Add(user);
             }
             else
             {
-                existing.Name = user.Name;
-                existing.Age = user.Age;
-                existing.WeightKg = user.WeightKg;
-                existing.HeightCm = user.HeightCm;
-                existing.Gender = user.Gender;
-                existing.ActivityLevel = user.ActivityLevel;
-                existing.Goal = user.Goal;
+                // Preserve the DB primary key, copy everything else
+                user.Id = existing.Id;
+                db.Entry(existing).CurrentValues.SetValues(user);
             }
-            await _db.SaveChangesAsync();
+
+            await db.SaveChangesAsync();
         }
     }
 }

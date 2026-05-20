@@ -16,7 +16,7 @@ namespace Training_APP.Service
         private readonly string _apiKey;
 
         private const string API_URL = "https://api.anthropic.com/v1/messages";
-        private const string MODEL = "claude-opus-4-5";
+        private const string MODEL = "claude-sonnet-4-6";
 
         // ================================
         // კონსტრუქტორი
@@ -255,6 +255,19 @@ Return ONLY raw JSON, no markdown, no backticks:
             return await ExecutePostAsync(requestBody);
         }
 
+        // Strips ```json ... ``` or ``` ... ``` markdown fences Claude sometimes adds
+        private static string StripMarkdown(string text)
+        {
+            text = text.Trim();
+            if (text.StartsWith("```"))
+            {
+                int firstNewline = text.IndexOf('\n');
+                if (firstNewline >= 0) text = text[(firstNewline + 1)..];
+                if (text.EndsWith("```")) text = text[..^3];
+            }
+            return text.Trim();
+        }
+
         private async Task<string> ExecutePostAsync(object payload)
         {
             string json = JsonConvert.SerializeObject(payload);
@@ -267,8 +280,9 @@ Return ONLY raw JSON, no markdown, no backticks:
                 throw new Exception($"API Error: {responseString}");
 
             var responseJson = JObject.Parse(responseString);
-            return responseJson["content"]?[0]?["text"]?.ToString()
-                   ?? throw new Exception("Claude-მა ცარიელი პასუხი დააბრუნა.");
+            string text = responseJson["content"]?[0]?["text"]?.ToString()
+                          ?? throw new Exception("Claude returned an empty response.");
+            return StripMarkdown(text);
         }
     }
 }

@@ -8,6 +8,9 @@ namespace Training_APP.Data
         public DbSet<User> Users { get; set; }
         public DbSet<FoodEntry> FoodEntries { get; set; }
         public DbSet<WorkoutEntry> WorkoutEntries { get; set; }
+        public DbSet<WorkoutPlan> WorkoutPlans { get; set; }
+        public DbSet<WeightEntry> WeightEntries { get; set; }
+        public DbSet<FoodCache>  FoodCache     { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
@@ -20,6 +23,10 @@ namespace Training_APP.Data
             modelBuilder.Entity<User>().ToTable("UserProfile");
             modelBuilder.Entity<FoodEntry>().ToTable("FoodEntries");
             modelBuilder.Entity<WorkoutEntry>().ToTable("WorkoutEntries");
+            modelBuilder.Entity<WorkoutPlan>().ToTable("WorkoutPlans");
+            modelBuilder.Entity<WeightEntry>().ToTable("WeightEntries");
+            modelBuilder.Entity<FoodCache>().ToTable("FoodCache")
+                .HasIndex(f => f.FoodKey).IsUnique();
         }
     }
 }

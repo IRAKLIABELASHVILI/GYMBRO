@@ -10,7 +10,7 @@ namespace Training_APP.Model
         public string FoodName { get; set; }
         public string MealType { get; set; }
         public DateTime Date { get; set; } = DateTime.Today;
-        public string ImagePath { get; set; }
+        public string? ImagePath { get; set; }
 
         // კალორიები
         public int Calories { get; set; }

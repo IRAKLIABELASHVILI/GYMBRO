@@ -1,195 +1,312 @@
-﻿<UserControl x:Class="Training_APP.Views.ProfileView"
+<UserControl x:Class="Training_APP.Views.ProfileView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             Background="Transparent">
+             Background="{DynamicResource AppBgBrush}">
 
-    <Grid Margin="30">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="28,24,28,24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <!-- ========== სათაური ========== -->
-        <StackPanel Grid.Row="0" Margin="0,0,0,24">
-            <TextBlock Text="👤 პროფილი"
-                       Foreground="White"
-                       FontFamily="Segoe UI Semibold"
-                       FontSize="26"/>
-            <TextBlock Text="შეიყვანე შენი მონაცემები სწორი გათვლებისთვის"
-                       Foreground="#4a9465"
-                       FontFamily="Segoe UI"
-                       FontSize="13"
-                       Margin="0,4,0,0"/>
-        </StackPanel>
+            <!-- Header -->
+            <StackPanel Grid.Row="0">
+                <TextBlock Text="Profile"
+                           Foreground="{DynamicResource TextPrimaryBrush}"
+                           FontFamily="Segoe UI Semibold" FontSize="24"/>
+                <TextBlock Text="Your data powers AI-personalized nutrition and workout plans"
+                           Foreground="{DynamicResource TextSecondaryBrush}"
+                           FontFamily="Segoe UI" FontSize="13" Margin="0,2,0,0"/>
+            </StackPanel>
 
-        <!-- ========== ფორმა ========== -->
-        <Border Grid.Row="1" CornerRadius="12" Padding="30">
-            <Border.Background>
-                <SolidColorBrush Color="#0a2416"/>
-            </Border.Background>
-            <Border.Effect>
-                <DropShadowEffect Color="#000000" BlurRadius="15"
-                                  ShadowDepth="2" Opacity="0.4"/>
-            </Border.Effect>
-
-            <Grid>
+            <!-- Avatar + stat cards -->
+            <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="88"/>
+                    <ColumnDefinition Width="16"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="12"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
 
-                <!-- სახელი -->
-                <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,0,16">
-                    <TextBlock Text="სახელი" Foreground="#4a9465"
-                               FontFamily="Segoe UI Semibold" FontSize="12" Margin="0,0,0,6"/>
-                    <Border CornerRadius="8" BorderBrush="#2d6e47" BorderThickness="1">
-                        <TextBox x:Name="NameBox" Background="#0f3d26" Foreground="White"
-                                 FontFamily="Segoe UI" FontSize="14" Padding="12,10"
-                                 BorderThickness="0">
-                            <TextBox.Resources>
-                                <Style TargetType="Border">
-                                    <Setter Property="CornerRadius" Value="8"/>
-                                </Style>
-                            </TextBox.Resources>
-                        </TextBox>
-                    </Border>
-                </StackPanel>
+                <!-- Avatar -->
+                <Border Grid.Column="0" Width="80" Height="80" CornerRadius="40"
+                        Background="{DynamicResource AccentGreenBrush}"
+                        VerticalAlignment="Center">
+                    <TextBlock x:Name="AvatarInitials" Text="?"
+                               Foreground="#0B0D14"
+                               FontFamily="Segoe UI Semibold" FontSize="28"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
 
-                <!-- ასაკი -->
-                <StackPanel Grid.Row="0" Grid.Column="2" Margin="0,0,0,16">
-                    <TextBlock Text="ასაკი" Foreground="#4a9465"
-                               FontFamily="Segoe UI Semibold" FontSize="12" Margin="0,0,0,6"/>
-                    <Border CornerRadius="8" BorderBrush="#2d6e47" BorderThickness="1">
-                        <TextBox x:Name="AgeBox" Background="#0f3d26" Foreground="White"
-                                 FontFamily="Segoe UI" FontSize="14" Padding="12,10"
-                                 BorderThickness="0">
-                            <TextBox.Resources>
-                                <Style TargetType="Border">
-                                    <Setter Property="CornerRadius" Value="8"/>
-                                </Style>
-                            </TextBox.Resources>
-                        </TextBox>
-                    </Border>
-                </StackPanel>
+                <!-- BMI -->
+                <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="18">
+                    <StackPanel>
+                        <TextBlock Text="BMI" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   FontFamily="Segoe UI Semibold" FontSize="10" Margin="0,0,0,4"/>
+                        <TextBlock x:Name="BmiText" Text="—"
+                                   Foreground="{DynamicResource TextPrimaryBrush}"
+                                   FontFamily="Segoe UI Light" FontSize="32"/>
+                        <TextBlock x:Name="BmiCategory" Text="Fill in weight &amp; height"
+                                   Foreground="{DynamicResource TextSecondaryBrush}"
+                                   FontFamily="Segoe UI" FontSize="12"/>
+                    </StackPanel>
+                </Border>
 
-                <!-- წონა -->
-                <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,0,16">
-                    <TextBlock Text="წონა (კგ)" Foreground="#4a9465"
-                               FontFamily="Segoe UI Semibold" FontSize="12" Margin="0,0,0,6"/>
-                    <Border CornerRadius="8" BorderBrush="#2d6e47" BorderThickness="1">
-                        <TextBox x:Name="WeightBox" Background="#0f3d26" Foreground="White"
-                                 FontFamily="Segoe UI" FontSize="14" Padding="12,10"
-                                 BorderThickness="0">
-                            <TextBox.Resources>
-                                <Style TargetType="Border">
-                                    <Setter Property="CornerRadius" Value="8"/>
-                                </Style>
-                            </TextBox.Resources>
-                        </TextBox>
-                    </Border>
-                </StackPanel>
+                <!-- Calorie goal -->
+                <Border Grid.Column="4" Style="{StaticResource CardStyle}" Padding="18">
+                    <StackPanel>
+                        <TextBlock Text="DAILY CALORIES" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   FontFamily="Segoe UI Semibold" FontSize="10" Margin="0,0,0,4"/>
+                        <TextBlock x:Name="CalorieGoalText" Text="—"
+                                   Foreground="{DynamicResource AccentAmberBrush}"
+                                   FontFamily="Segoe UI Light" FontSize="32"/>
+                        <TextBlock Text="kcal / day" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   FontFamily="Segoe UI" FontSize="12"/>
+                    </StackPanel>
+                </Border>
 
-                <!-- სიმაღლე -->
-                <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,16">
-                    <TextBlock Text="სიმაღლე (სმ)" Foreground="#4a9465"
-                               FontFamily="Segoe UI Semibold" FontSize="12" Margin="0,0,0,6"/>
-                    <Border CornerRadius="8" BorderBrush="#2d6e47" BorderThickness="1">
-                        <TextBox x:Name="HeightBox" Background="#0f3d26" Foreground="White"
-                                 FontFamily="Segoe UI" FontSize="14" Padding="12,10"
-                                 BorderThickness="0">
-                            <TextBox.Resources>
-                                <Style TargetType="Border">
-                                    <Setter Property="CornerRadius" Value="8"/>
-                                </Style>
-                            </TextBox.Resources>
-                        </TextBox>
-                    </Border>
-                </StackPanel>
-
-                <!-- სქესი -->
-                <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,0,0,16">
-                    <TextBlock Text="სქესი" Foreground="#4a9465"
-                               FontFamily="Segoe UI Semibold" FontSize="12" Margin="0,0,0,6"/>
-                    <Border CornerRadius="8" BorderBrush="#2d6e47" BorderThickness="1"
-                            Background="#0f3d26">
-                        <ComboBox x:Name="GenderCombo" Background="Transparent"
-                                  Foreground="White" BorderThickness="0"
-                                  FontFamily="Segoe UI" FontSize="14" Padding="12,10">
-                            <ComboBoxItem Content="მამრობითი"/>
-                            <ComboBoxItem Content="მდედრობითი"/>
-                        </ComboBox>
-                    </Border>
-                </StackPanel>
-
-                <!-- აქტივობა -->
-                <StackPanel Grid.Row="2" Grid.Column="2" Margin="0,0,0,16">
-                    <TextBlock Text="აქტივობის დონე" Foreground="#4a9465"
-                               FontFamily="Segoe UI Semibold" FontSize="12" Margin="0,0,0,6"/>
-                    <Border CornerRadius="8" BorderBrush="#2d6e47" BorderThickness="1"
-                            Background="#0f3d26">
-                        <ComboBox x:Name="ActivityCombo" Background="Transparent"
-                                  Foreground="White" BorderThickness="0"
-                                  FontFamily="Segoe UI" FontSize="14" Padding="12,10">
-                            <ComboBoxItem Content="დამწყები"/>
-                            <ComboBoxItem Content="საშუალო"/>
-                            <ComboBoxItem Content="მოწინავე"/>
-                        </ComboBox>
-                    </Border>
-                </StackPanel>
-
-                <!-- მიზანი -->
-                <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,0">
-                    <TextBlock Text="მიზანი" Foreground="#4a9465"
-                               FontFamily="Segoe UI Semibold" FontSize="12" Margin="0,0,0,6"/>
-                    <Border CornerRadius="8" BorderBrush="#2d6e47" BorderThickness="1"
-                            Background="#0f3d26">
-                        <ComboBox x:Name="GoalCombo" Background="Transparent"
-                                  Foreground="White" BorderThickness="0"
-                                  FontFamily="Segoe UI" FontSize="14" Padding="12,10">
-                            <ComboBoxItem Content="წონის დაკლება"/>
-                            <ComboBoxItem Content="კუნთის მომატება"/>
-                            <ComboBoxItem Content="გამძლეობის გაზრდა"/>
-                            <ComboBoxItem Content="ფორმის შენარჩუნება"/>
-                        </ComboBox>
-                    </Border>
-                </StackPanel>
-
+                <!-- Goal -->
+                <Border Grid.Column="6" Style="{StaticResource CardStyle}" Padding="18">
+                    <StackPanel>
+                        <TextBlock Text="FITNESS GOAL" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   FontFamily="Segoe UI Semibold" FontSize="10" Margin="0,0,0,4"/>
+                        <TextBlock x:Name="GoalSummaryText" Text="—"
+                                   Foreground="{DynamicResource AccentGreenBrush}"
+                                   FontFamily="Segoe UI Semibold" FontSize="15"
+                                   TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
             </Grid>
-        </Border>
 
-        <!-- ========== შენახვის ღილაკი ========== -->
-        <Button Grid.Row="2" Content="შენახვა ✓"
-                Click="SaveProfile_Click"
-                Height="48" Margin="0,16,0,0"
-                Cursor="Hand"
-                FontFamily="Segoe UI Semibold"
-                FontSize="15"
-                Foreground="White"
-                BorderThickness="0">
-            <Button.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                    <GradientStop Color="#1a5c3a" Offset="0"/>
-                    <GradientStop Color="#2d8a57" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.Background>
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}"
-                            CornerRadius="10">
-                        <ContentPresenter VerticalAlignment="Center"
-                                          HorizontalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
+            <!-- Form -->
+            <Border Grid.Row="4" Style="{StaticResource CardStyle}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="16"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="16"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-    </Grid>
+                    <!-- Name / Age / Gender -->
+                    <StackPanel Grid.Row="0" Grid.Column="0">
+                        <TextBlock Text="FULL NAME" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   FontFamily="Segoe UI Semibold" FontSize="10" Margin="0,0,0,8"/>
+                        <TextBox x:Name="NameBox" Height="44" Padding="12,0"
+                                 VerticalContentAlignment="Center"
+                                 TextChanged="Name_Changed"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="2">
+                        <TextBlock Text="AGE" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   FontFamily="Segoe UI Semibold" FontSize="10" Margin="0,0,0,8"/>
+                        <TextBox x:Name="AgeBox" Height="44" Padding="12,0"
+                                 VerticalContentAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="4">
+                        <TextBlock Text="GENDER" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   FontFamily="Segoe UI Semibold" FontSize="10" Margin="0,0,0,8"/>
+                        <ComboBox x:Name="GenderCombo" Height="44">
+                            <ComboBoxItem Content="Male"/>
+                            <ComboBoxItem Content="Female"/>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <!-- Weight / Height / Activity -->
+                    <StackPanel Grid.Row="2" Grid.Column="0">
+                        <TextBlock Text="WEIGHT (kg)" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   FontFamily="Segoe UI Semibold" FontSize="10" Margin="0,0,0,8"/>
+                        <TextBox x:Name="WeightBox" Height="44" Padding="12,0"
+                                 VerticalContentAlignment="Center"
+                                 TextChanged="PhysicalStats_Changed"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.Column="2">
+                        <TextBlock Text="HEIGHT (cm)" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   FontFamily="Segoe UI Semibold" FontSize="10" Margin="0,0,0,8"/>
+                        <TextBox x:Name="HeightBox" Height="44" Padding="12,0"
+                                 VerticalContentAlignment="Center"
+                                 TextChanged="PhysicalStats_Changed"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.Column="4">
+                        <TextBlock Text="ACTIVITY LEVEL" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   FontFamily="Segoe UI Semibold" FontSize="10" Margin="0,0,0,8"/>
+                        <ComboBox x:Name="ActivityCombo" Height="44">
+                            <ComboBoxItem Content="Beginner"/>
+                            <ComboBoxItem Content="Intermediate"/>
+                            <ComboBoxItem Content="Advanced"/>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <!-- Goal full width -->
+                    <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5">
+                        <TextBlock Text="FITNESS GOAL" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   FontFamily="Segoe UI Semibold" FontSize="10" Margin="0,0,0,8"/>
+                        <ComboBox x:Name="GoalCombo" Height="44">
+                            <ComboBoxItem Content="Weight Loss"/>
+                            <ComboBoxItem Content="Muscle Gain"/>
+                            <ComboBoxItem Content="Improve Endurance"/>
+                            <ComboBoxItem Content="Maintain Weight"/>
+                        </ComboBox>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Macro targets card -->
+            <Border Grid.Row="6" x:Name="TdeeCard" Visibility="Collapsed"
+                    BorderBrush="{DynamicResource AccentGreenBrush}"
+                    BorderThickness="1" CornerRadius="12" Padding="20"
+                    Background="{DynamicResource TdeeCardBgBrush}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                        <TextBlock Text="PROTEIN" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   FontFamily="Segoe UI Semibold" FontSize="10" HorizontalAlignment="Center"/>
+                        <TextBlock x:Name="TdeeProtein" Foreground="#00B4D8"
+                                   FontFamily="Segoe UI Light" FontSize="28" HorizontalAlignment="Center"/>
+                        <TextBlock Text="g / day" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   FontFamily="Segoe UI" FontSize="11" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                        <TextBlock Text="CARBS" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   FontFamily="Segoe UI Semibold" FontSize="10" HorizontalAlignment="Center"/>
+                        <TextBlock x:Name="TdeeCarbs" Foreground="{DynamicResource AccentAmberBrush}"
+                                   FontFamily="Segoe UI Light" FontSize="28" HorizontalAlignment="Center"/>
+                        <TextBlock Text="g / day" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   FontFamily="Segoe UI" FontSize="11" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" HorizontalAlignment="Center">
+                        <TextBlock Text="FATS" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   FontFamily="Segoe UI Semibold" FontSize="10" HorizontalAlignment="Center"/>
+                        <TextBlock x:Name="TdeeFats" Foreground="{DynamicResource AccentGreenBrush}"
+                                   FontFamily="Segoe UI Light" FontSize="28" HorizontalAlignment="Center"/>
+                        <TextBlock Text="g / day" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   FontFamily="Segoe UI" FontSize="11" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Save -->
+            <Button Grid.Row="8"
+                    Content="Save &amp; Recalculate Goals"
+                    Style="{StaticResource PrimaryButton}"
+                    Height="48"
+                    Click="SaveProfile_Click"/>
+
+            <!-- Weight Log -->
+            <Border Grid.Row="10" Style="{StaticResource CardStyle}" Padding="20">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="16"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="16"/>
+                        <RowDefinition Height="140"/>
+                        <RowDefinition Height="12"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Header row -->
+                    <Grid Grid.Row="0">
+                        <StackPanel>
+                            <TextBlock Text="WEIGHT TRACKER"
+                                       Foreground="{DynamicResource TextSecondaryBrush}"
+                                       FontFamily="Segoe UI Semibold" FontSize="10"/>
+                            <TextBlock x:Name="WeightTrendText"
+                                       Foreground="{DynamicResource TextSecondaryBrush}"
+                                       FontFamily="Segoe UI" FontSize="12"
+                                       Margin="0,2,0,0"
+                                       Text="Log your weight daily to see your trend"/>
+                        </StackPanel>
+                        <TextBlock x:Name="TodayWeightBadge"
+                                   Foreground="{DynamicResource AccentGreenBrush}"
+                                   FontFamily="Segoe UI Semibold" FontSize="13"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Center"
+                                   Visibility="Collapsed"/>
+                    </Grid>
+
+                    <Rectangle Grid.Row="1" Height="1" Fill="{DynamicResource DividerBrush}"/>
+
+                    <!-- Log input row -->
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0">
+                            <TextBox x:Name="WeightLogBox"
+                                     Height="44" Padding="12,0"
+                                     VerticalContentAlignment="Center"
+                                     Foreground="{DynamicResource TextPrimaryBrush}"
+                                     Background="{DynamicResource InputBrush}"/>
+                            <TextBlock Text="Today's weight (kg)"
+                                       Foreground="#3A4055"
+                                       FontFamily="Segoe UI" FontSize="12"
+                                       Margin="13,0,0,0"
+                                       VerticalAlignment="Center"
+                                       IsHitTestVisible="False">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=WeightLogBox}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+
+                        <Button Grid.Column="2"
+                                Content="+ Log Weight"
+                                Style="{StaticResource PrimaryButton}"
+                                Height="44" Padding="18,0"
+                                Click="LogWeight_Click"/>
+                    </Grid>
+
+                    <!-- Chart canvas -->
+                    <Canvas x:Name="WeightChart" Grid.Row="4"
+                            Background="{DynamicResource InputBrush}"
+                            ClipToBounds="True"/>
+
+                    <!-- X-axis date labels -->
+                    <ItemsControl x:Name="ChartDateLabels" Grid.Row="6">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+
+                </Grid>
+            </Border>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

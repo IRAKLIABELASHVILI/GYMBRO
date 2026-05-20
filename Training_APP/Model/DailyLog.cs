@@ -11,6 +11,9 @@ namespace Training_APP.Model
         public List<FoodEntry> FoodEntries { get; set; } = new();
         public List<WorkoutEntry> WorkoutEntries { get; set; } = new();
 
+        // Water explicitly logged (ml) — set by service, not computed
+        public double WaterLoggedMl { get; set; } = 0;
+
         // მიზნები
         public int CalorieGoal { get; set; } = 2000;
         public double ProteinGoal { get; set; } = 150;
