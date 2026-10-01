@@ -42,8 +42,8 @@ A modern WPF desktop application that uses AI to track your nutrition, workouts,
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/abela69/Teaining_APP.git
-cd Teaining_APP
+git clone https://github.com/abela69/GYMBRO.git
+cd GYMBRO
 ```
 
 ### 2. Create your `.env` file
